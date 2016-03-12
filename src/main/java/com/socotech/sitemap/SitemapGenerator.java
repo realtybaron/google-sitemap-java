@@ -1,6 +1,5 @@
 package com.socotech.sitemap;
 
-import com.google.common.io.Closeables;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -9,6 +8,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.util.List;
@@ -34,28 +34,20 @@ public abstract class SitemapGenerator {
      *
      * @throws java.io.IOException if file writer cannot be created
      */
-    public void export(Writer writer) throws Exception {
-        try {
-            SitemapPager pager = new SitemapPager();
-            Template template = ve.getTemplate("google_sitemap_urls.vm");
-            VelocityContext context = new VelocityContext();
-            do {
-                List<SitemapEntry> entries = this.getEntries(pager);
-                pager.fetchSize(entries).advance();
-                context.put("entries", entries);
-                try {
-                    template.merge(context, writer);
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                }
-            } while (pager.hasMore());
-            log.info("Sitemap generator completed successfully");
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        } finally {
-            writer.flush();
-            Closeables.close(writer, true);
-        }
+    public void export(Writer writer) throws IOException {
+        Template template = ve.getTemplate("google_sitemap_urls.vm");
+        SitemapPager pager = new SitemapPager();
+        VelocityContext context = new VelocityContext();
+        do {
+            List<SitemapEntry> entries = this.getEntries(pager);
+            pager.fetchSize(entries).advance();
+            context.put("entries", entries);
+            try {
+                template.merge(context, writer);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        } while (pager.hasMore());
     }
 
     protected abstract List<SitemapEntry> getEntries(SitemapPager pager) throws MalformedURLException;
