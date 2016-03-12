@@ -1,0 +1,3 @@
+#foreach( $entry in $entries )
+    $entry.url changefreq=$entry.changeFrequency priority=$entry.priority
+#end
