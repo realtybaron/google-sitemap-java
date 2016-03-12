@@ -3,7 +3,9 @@ package com.socotech.sitemap;
 import com.google.common.io.Closeables;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +20,13 @@ import java.util.List;
  * TECHNOLOGIES.
  */
 public abstract class SitemapGenerator {
+    private VelocityEngine ve;
 
     public SitemapGenerator() {
-        Velocity.init();
+        ve = new VelocityEngine();
+        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        ve.init();
     }
 
     /**
@@ -31,7 +37,7 @@ public abstract class SitemapGenerator {
     public void export(Writer writer) throws Exception {
         try {
             SitemapPager pager = new SitemapPager();
-            Template template = Velocity.getTemplate("google_sitemap_urls.vm");
+            Template template = ve.getTemplate("google_sitemap_urls.vm");
             VelocityContext context = new VelocityContext();
             do {
                 List<SitemapEntry> entries = this.getEntries(pager);
