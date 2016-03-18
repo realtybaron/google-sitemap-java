@@ -35,22 +35,34 @@ public abstract class SitemapGenerator {
      * @throws java.io.IOException if file writer cannot be created
      */
     public void export(Writer writer) throws IOException {
-        Template template = ve.getTemplate("google_sitemap_urls.vm");
         SitemapPager pager = new SitemapPager();
-        VelocityContext context = new VelocityContext();
         do {
-            List<SitemapEntry> entries = this.getEntries(pager);
-            pager.fetchSize(entries).advance();
-            context.put("entries", entries);
-            try {
-                template.merge(context, writer);
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            }
+            int startIndex = pager.getStartIndex();
+            int maxResults = pager.getMaxResults();
+            int exported = this.export(writer, startIndex, maxResults);
+            pager.fetchSize(exported).advance();
         } while (pager.hasMore());
     }
 
-    protected abstract List<SitemapEntry> getEntries(SitemapPager pager) throws MalformedURLException;
+    /**
+     * Run it!
+     *
+     * @throws java.io.IOException if file writer cannot be created
+     */
+    public int export(Writer writer, int startIndex, int maxResults) throws IOException {
+        Template template = ve.getTemplate("google_sitemap_urls.vm");
+        VelocityContext context = new VelocityContext();
+        List<SitemapEntry> entries = this.getEntries(startIndex, maxResults);
+        context.put("entries", entries);
+        try {
+            template.merge(context, writer);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        return entries.size();
+    }
+
+    protected abstract List<SitemapEntry> getEntries(int startIndex, int maxResults) throws MalformedURLException;
 
     /**
      * logger

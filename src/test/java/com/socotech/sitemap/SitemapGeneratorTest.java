@@ -19,7 +19,7 @@ public class SitemapGeneratorTest {
     public void testExport() throws Exception {
         SitemapGenerator generator = new SitemapGenerator() {
             @Override
-            protected List<SitemapEntry> getEntries(SitemapPager pager) throws MalformedURLException {
+            protected List<SitemapEntry> getEntries(int startIndex, int maxResults) throws MalformedURLException {
                 List<SitemapEntry> entries = Lists.newArrayList();
                 for (int i = 0; i < 5; i++) {
                     entries.add(SitemapEntry.newSitemapEntry("http://www.foo.com/" + i));
