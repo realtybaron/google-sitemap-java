@@ -9,6 +9,15 @@ repositories {
     mavenCentral()
 }
 
+/**
+ * https://goo.gl/DqXK1b
+ */
+sourceSets {
+    main {
+        output.resourcesDir = "build/classes/main"
+    }
+}
+
 dependencies {
     compile 'org.apache.velocity:velocity:1.7'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.16'
