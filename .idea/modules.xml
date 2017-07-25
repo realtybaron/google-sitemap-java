@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/google-sitemap-java.iml" filepath="$PROJECT_DIR$/google-sitemap-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/google-sitemap-java_main.iml" filepath="$PROJECT_DIR$/.idea/modules/google-sitemap-java_main.iml" group="google-sitemap-java" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/google-sitemap-java_test.iml" filepath="$PROJECT_DIR$/.idea/modules/google-sitemap-java_test.iml" group="google-sitemap-java" />
     </modules>
   </component>
 </project>
