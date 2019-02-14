@@ -20,6 +20,7 @@ import java.util.List;
  * TECHNOLOGIES.
  */
 public abstract class SitemapGenerator {
+
     private VelocityEngine ve;
 
     public SitemapGenerator() {
@@ -67,5 +68,5 @@ public abstract class SitemapGenerator {
     /**
      * logger
      */
-    private static Logger log = LoggerFactory.getLogger(SitemapGenerator.class);
+    private static final Logger log = LoggerFactory.getLogger(SitemapGenerator.class);
 }
