@@ -6,11 +6,11 @@ package com.socotech.sitemap;
  * Time: 8:11:06 AM
  */
 public enum ChangeFrequency {
-  always,
-  hourly,
-  daily,
-  weekly,
-  monthly,
-  yearly,
-  never
+    always,
+    hourly,
+    daily,
+    weekly,
+    monthly,
+    yearly,
+    never
 }
