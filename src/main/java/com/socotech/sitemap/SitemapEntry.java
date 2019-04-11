@@ -2,10 +2,16 @@ package com.socotech.sitemap;
 
 import com.google.common.base.Preconditions;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * User: marc Date: Jan 13, 2009 Time: 8:09:08 AM
  */
 public class SitemapEntry {
+
+    private Date lastModified;
     private String url;
     private float priority;
     private ChangeFrequency changeFrequency;
@@ -26,6 +32,14 @@ public class SitemapEntry {
         this.priority = f;
     }
 
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
+    }
+
     public ChangeFrequency getChangeFrequency() {
         return changeFrequency;
     }
@@ -34,14 +48,58 @@ public class SitemapEntry {
         this.changeFrequency = frequency;
     }
 
+    public String getLastModifiedAsString() {
+        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(lastModified);
+    }
+
+    static public class Builder {
+
+        private SitemapEntry entry;
+
+        public Builder() {
+            this.entry = new SitemapEntry();
+            this.entry.setPriority(0.5f);
+        }
+
+        public Builder url(String url) {
+            Preconditions.checkNotNull(url, "URL is null");
+            this.entry.setUrl(url);
+            return this;
+        }
+
+        public Builder priority(float priority) {
+            Preconditions.checkState(priority >= 0.0f && priority <= 1.0f);
+            this.entry.setPriority(priority);
+            return this;
+        }
+
+        public Builder lastModified(Date date) {
+            this.entry.setLastModified(date);
+            return this;
+        }
+
+        public Builder changeFrequency(ChangeFrequency frequency) {
+            Preconditions.checkNotNull(frequency, "ChangeFrequency cannot be null");
+            this.entry.setChangeFrequency(frequency);
+            return this;
+        }
+
+        public SitemapEntry build() {
+            return entry;
+        }
+    }
+
+    @Deprecated
     public static SitemapEntry newSitemapEntry(String url) {
         return newSitemapEntry(url, 1.0f, ChangeFrequency.never);
     }
 
+    @Deprecated
     public static SitemapEntry newSitemapEntry(String url, ChangeFrequency frequency) {
         return newSitemapEntry(url, 1.0f, frequency);
     }
 
+    @Deprecated
     public static SitemapEntry newSitemapEntry(String url, float priority, ChangeFrequency frequency) {
         Preconditions.checkNotNull(url, "URL is null");
         Preconditions.checkNotNull(frequency, "ChangeFrequency is null");
@@ -52,4 +110,5 @@ public class SitemapEntry {
         impl.setChangeFrequency(frequency);
         return impl;
     }
+
 }
