@@ -23,7 +23,7 @@ public abstract class SitemapGenerator {
 
     private VelocityEngine ve;
 
-    public SitemapGenerator() {
+    protected SitemapGenerator() {
         ve = new VelocityEngine();
         ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
