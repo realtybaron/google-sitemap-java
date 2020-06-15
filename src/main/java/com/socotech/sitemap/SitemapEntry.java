@@ -89,18 +89,15 @@ public class SitemapEntry {
         }
     }
 
-    @Deprecated
-    public static SitemapEntry newSitemapEntry(String url) {
-        return newSitemapEntry(url, 1.0f, ChangeFrequency.never);
+    public static SitemapEntry of(String url) {
+        return of(url, 1.0f, ChangeFrequency.never);
     }
 
-    @Deprecated
-    public static SitemapEntry newSitemapEntry(String url, ChangeFrequency frequency) {
-        return newSitemapEntry(url, 1.0f, frequency);
+    public static SitemapEntry of(String url, ChangeFrequency frequency) {
+        return of(url, 1.0f, frequency);
     }
 
-    @Deprecated
-    public static SitemapEntry newSitemapEntry(String url, float priority, ChangeFrequency frequency) {
+    public static SitemapEntry of(String url, float priority, ChangeFrequency frequency) {
         Preconditions.checkNotNull(url, "URL is null");
         Preconditions.checkNotNull(frequency, "ChangeFrequency is null");
         Preconditions.checkState(priority >= 0.0f && priority <= 1.0f);

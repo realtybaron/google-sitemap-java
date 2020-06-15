@@ -22,7 +22,7 @@ public class SitemapGeneratorTest {
             protected List<SitemapEntry> getEntries(int startIndex, int maxResults) throws MalformedURLException {
                 List<SitemapEntry> entries = Lists.newArrayList();
                 for (int i = 0; i < 5; i++) {
-                    entries.add(SitemapEntry.newSitemapEntry("http://www.foo.com/" + i));
+                    entries.add(SitemapEntry.of("http://www.foo.com/" + i));
                 }
                 return entries;
             }

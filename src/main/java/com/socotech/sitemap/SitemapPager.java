@@ -11,6 +11,7 @@ import java.util.Collection;
  * Time: 7:01 AM
  */
 public class SitemapPager {
+
     private int startIndex, maxResults, fetchSize, pageNumber;
 
     /**
