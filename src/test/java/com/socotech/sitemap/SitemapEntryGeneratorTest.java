@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.StringWriter;
-import java.net.MalformedURLException;
 import java.util.List;
 
 /**
@@ -14,12 +13,12 @@ import java.util.List;
  * Date: 3/12/16
  * Time: 12:02 PM
  */
-public class SitemapGeneratorTest {
+public class SitemapEntryGeneratorTest {
     @Test
     public void testExport() throws Exception {
-        SitemapGenerator generator = new SitemapGenerator() {
+        SitemapEntryGenerator generator = new SitemapEntryGenerator() {
             @Override
-            protected List<SitemapEntry> getEntries(int startIndex, int maxResults) throws MalformedURLException {
+            protected List<SitemapEntry> getEntries(int startIndex, int maxResults) {
                 List<SitemapEntry> entries = Lists.newArrayList();
                 for (int i = 0; i < 5; i++) {
                     entries.add(SitemapEntry.of("http://www.foo.com/" + i));

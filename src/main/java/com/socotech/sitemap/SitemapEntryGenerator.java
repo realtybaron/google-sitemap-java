@@ -5,8 +5,6 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -19,15 +17,15 @@ import java.util.List;
  * THIS SOFTWARE IS COPYRIGHTED.  THE SOFTWARE MAY NOT BE COPIED REPRODUCED, TRANSLATED, OR REDUCED TO ANY ELECTRONIC MEDIUM OR MACHINE READABLE FORM WITHOUT THE PRIOR WRITTEN CONSENT OF SOCO
  * TECHNOLOGIES.
  */
-public abstract class SitemapGenerator {
+public abstract class SitemapEntryGenerator {
 
-    private VelocityEngine ve;
+    private final VelocityEngine velocityEngine;
 
-    protected SitemapGenerator() {
-        ve = new VelocityEngine();
-        ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
-        ve.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-        ve.init();
+    protected SitemapEntryGenerator() {
+        this.velocityEngine = new VelocityEngine();
+        this.velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        this.velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        this.velocityEngine.init();
     }
 
     /**
@@ -51,22 +49,18 @@ public abstract class SitemapGenerator {
      * @throws java.io.IOException if file writer cannot be created
      */
     public int export(Writer writer, int startIndex, int maxResults) throws IOException {
-        Template template = ve.getTemplate("google_sitemap_urls.vm");
+        Template template = velocityEngine.getTemplate("google_sitemap_urls.vm");
         VelocityContext context = new VelocityContext();
         List<SitemapEntry> entries = this.getEntries(startIndex, maxResults);
         context.put("entries", entries);
         try {
             template.merge(context, writer);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
+        } finally {
+            writer.flush();
         }
         return entries.size();
     }
 
     protected abstract List<SitemapEntry> getEntries(int startIndex, int maxResults) throws MalformedURLException;
 
-    /**
-     * logger
-     */
-    private static final Logger log = LoggerFactory.getLogger(SitemapGenerator.class);
 }
