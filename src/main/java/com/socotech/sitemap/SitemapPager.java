@@ -12,7 +12,10 @@ import java.util.Collection;
  */
 public class SitemapPager {
 
-    private int startIndex, maxResults, fetchSize, pageNumber;
+    private int startIndex;
+    private final int maxResults;
+    private int fetchSize;
+    private int pageNumber;
 
     /**
      * Default constructor

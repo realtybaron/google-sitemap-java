@@ -54,7 +54,7 @@ public class SitemapEntry {
 
     static public class Builder {
 
-        private SitemapEntry entry;
+        private final SitemapEntry entry;
 
         public Builder() {
             this.entry = new SitemapEntry();
