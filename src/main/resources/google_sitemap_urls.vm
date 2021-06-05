@@ -7,6 +7,10 @@
             #if ($entry.lastModified)
                 <lastmod>$entry.lastModifiedAsString</lastmod>
             #end
+            <priority>${entry.priority}</priority>
+            #if ($entry.changeFrequency)
+                <changefreq>$entry.changeFrequency</changefreq>
+            #end
         </url>
     #end
 </urlset>

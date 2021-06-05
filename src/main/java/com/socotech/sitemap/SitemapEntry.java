@@ -12,8 +12,8 @@ import java.util.Locale;
 public class SitemapEntry {
 
     private Date lastModified;
-    private String url;
     private float priority;
+    private String url;
     private ChangeFrequency changeFrequency;
 
     public String getUrl() {
